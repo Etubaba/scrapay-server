@@ -1,0 +1,38 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type AuthResponse {
+  full_name: String!
+  id: Float!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+type Mutation {
+  """refresh expired access token with refresh token"""
+  refreshtoken(refreshTokenInput: RefreshTokenInput!): AuthResponse!
+
+  """SignIn a user"""
+  signIn(loginInput: LoginInput!): AuthResponse!
+
+  """SignUp a user"""
+  signUp(registerInput: RegisterInput!): AuthResponse!
+}
+
+type Query {
+  sayHello: String!
+}
+
+input RefreshTokenInput {
+  token: String!
+}
+
+input RegisterInput {
+  email: String!
+  full_name: String!
+  password: String!
+}

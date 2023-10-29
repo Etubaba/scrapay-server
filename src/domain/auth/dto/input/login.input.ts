@@ -1,12 +1,13 @@
+import { Field, InputType } from '@nestjs/graphql';
 import { IsString, IsNotEmpty, IsEmail, MaxLength } from 'class-validator';
-
-export class LoginDto {
+@InputType()
+export class LoginInput {
+  @Field()
   @IsNotEmpty()
-  @IsString()
   @IsEmail()
   email: string;
+  @Field()
   @IsNotEmpty()
-  @IsString()
   @MaxLength(7)
   password: string;
 }
