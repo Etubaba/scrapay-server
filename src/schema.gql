@@ -3,8 +3,21 @@
 # ------------------------------------------------------
 
 type AuthResponse {
+  accessToken: String!
   full_name: String!
   id: Float!
+  refreshToken: String!
+}
+
+type Book {
+  description: String!
+  id: Int!
+  name: String!
+}
+
+input CreateBookInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
 }
 
 input LoginInput {
@@ -13,17 +26,22 @@ input LoginInput {
 }
 
 type Mutation {
+  createBook(createBookInput: CreateBookInput!): Book!
+
+  """SignIn a user"""
+  login(loginInput: LoginInput!): AuthResponse!
+
   """refresh expired access token with refresh token"""
   refreshtoken(refreshTokenInput: RefreshTokenInput!): AuthResponse!
 
-  """SignIn a user"""
-  signIn(loginInput: LoginInput!): AuthResponse!
-
   """SignUp a user"""
-  signUp(registerInput: RegisterInput!): AuthResponse!
+  register(registerInput: RegisterInput!): AuthResponse!
+  removeBook(id: Int!): Book!
+  updateBook(updateBookInput: UpdateBookInput!): Book!
 }
 
 type Query {
+  book(id: Int!): Book!
   sayHello: String!
 }
 
@@ -35,4 +53,10 @@ input RegisterInput {
   email: String!
   full_name: String!
   password: String!
+}
+
+input UpdateBookInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
 }

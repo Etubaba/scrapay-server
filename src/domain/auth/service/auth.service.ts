@@ -36,10 +36,17 @@ export class AuthService {
       },
     });
 
+    //generate token
+    //generate token
+    const [accessToken, refreshToken] = await Promise.all([
+      this.generateNewToken(user.id, user.email, 'access'),
+      this.generateNewToken(user.id, user.email, 'refresh'),
+    ]);
+
     //delete user password for security
     delete user.password;
 
-    return user;
+    return { ...user, accessToken, refreshToken };
   }
   async loginUser(loginInput: LoginInput) {
     const { email, password } = loginInput;

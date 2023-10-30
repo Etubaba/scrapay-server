@@ -6,6 +6,9 @@ export class AuthResponse {
   id: number;
   @Field(() => String)
   full_name: String;
-  // @Field(() => String)
+  @Field(() => String)
+  accessToken: string;
+  @Field(() => String)
+  refreshToken: string;
   // platform: String;
 }

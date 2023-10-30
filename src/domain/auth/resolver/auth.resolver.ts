@@ -10,14 +10,14 @@ export class AuthResolver {
   constructor(private readonly authService: AuthService) {}
 
   @Mutation(() => AuthResponse, {
-    name: 'signUp',
+    name: 'register',
     description: 'SignUp a user',
   })
   async register(@Args('registerInput') registerInput: RegisterInput) {
     return await this.authService.registerUser(registerInput);
   }
   @Mutation(() => AuthResponse, {
-    name: 'signIn',
+    name: 'login',
     description: 'SignIn a user',
   })
   async login(@Args('loginInput') loginInput: LoginInput) {

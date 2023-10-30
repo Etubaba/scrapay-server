@@ -8,6 +8,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
 import { AuthModule } from './domain/auth/auth.module';
 import { JwtService } from '@nestjs/jwt';
+import { BookModule } from './domain/book/book.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { JwtService } from '@nestjs/jwt';
     }),
     PrismaModule,
     AuthModule,
+    BookModule,
   ],
 
   providers: [JwtService, AppResolver],
