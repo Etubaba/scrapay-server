@@ -1,26 +1,54 @@
 import { Injectable } from '@nestjs/common';
 import { CreateBookInput } from '../dto/create-book.input';
 import { UpdateBookInput } from '../dto/update-book.input';
+import { PrismaService } from 'src/prisma/service/prisma.service';
 
 @Injectable()
 export class BookService {
-  create(createBookInput: CreateBookInput) {
-    return 'This action adds a new book';
+  constructor(private prismaService: PrismaService) {}
+  async create(createBookInput: CreateBookInput) {
+    const book = await this.prismaService.book.create({
+      data: {
+        ...createBookInput,
+      },
+    });
+    return book;
   }
 
-  findAll() {
-    return `This action returns all book`;
+  async findAll() {
+    const books = await this.prismaService.book.findMany({});
+    return books;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} book`;
+  async findOne(id: number) {
+    const game = await this.prismaService.book.findUnique({
+      where: {
+        id,
+      },
+    });
+    return game;
   }
 
-  update(id: number, updateBookInput: UpdateBookInput) {
-    return `This action updates a #${id} book`;
+  async update(id: number, updateBookInput: UpdateBookInput) {
+    const { description, name } = updateBookInput;
+    const updatedGame = await this.prismaService.book.update({
+      where: {
+        id,
+      },
+      data: {
+        name,
+        description,
+      },
+    });
+    return updatedGame;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} book`;
+  async remove(id: number) {
+    const deletedBook = await this.prismaService.book.delete({
+      where: {
+        id,
+      },
+    });
+    return deletedBook;
   }
 }

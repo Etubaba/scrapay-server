@@ -16,8 +16,8 @@ type Book {
 }
 
 input CreateBookInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  description: String!
+  name: String!
 }
 
 input LoginInput {
@@ -42,6 +42,7 @@ type Mutation {
 
 type Query {
   book(id: Int!): Book!
+  books: [Book!]!
   sayHello: String!
 }
 
@@ -56,7 +57,7 @@ input RegisterInput {
 }
 
 input UpdateBookInput {
-  """Example field (placeholder)"""
-  exampleField: Int
+  description: String
   id: Int!
+  name: String
 }
