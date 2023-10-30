@@ -37,7 +37,6 @@ export class AuthService {
     });
 
     //generate token
-    //generate token
     const [accessToken, refreshToken] = await Promise.all([
       this.generateNewToken(user.id, user.email, 'access'),
       this.generateNewToken(user.id, user.email, 'refresh'),
@@ -73,7 +72,8 @@ export class AuthService {
       const { email } = this.jwtService.verify<JwtPayload>(token, {
         secret: this.configService.get('jwt.refresh.secret'),
       });
-      if (!email) throw new UnauthorizedException('Invalid token');
+      if (!email)
+        throw new UnauthorizedException('Invalid token or token expired');
 
       const user = await this.prismaService.user.findUnique({
         where: {
@@ -90,7 +90,7 @@ export class AuthService {
       delete user.password;
       return { ...user, accessToken, refreshToken };
     } catch (err) {
-      throw new UnauthorizedException('Token expired');
+      throw new UnauthorizedException('Invalid token or token expired');
     }
   }
 
