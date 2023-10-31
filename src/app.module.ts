@@ -9,6 +9,7 @@ import { join } from 'path';
 import { AuthModule } from './domain/auth/auth.module';
 import { JwtService } from '@nestjs/jwt';
 import { BookModule } from './domain/book/book.module';
+import { AuthorizationModule } from './domain/authorization/authorization.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { BookModule } from './domain/book/book.module';
     PrismaModule,
     AuthModule,
     BookModule,
+    AuthorizationModule,
   ],
 
   providers: [JwtService, AppResolver],

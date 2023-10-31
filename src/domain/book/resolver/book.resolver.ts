@@ -3,39 +3,36 @@ import { BookService } from '../service/book.service';
 import { Book } from '../entities/book.entity';
 import { CreateBookInput } from '../dto/create-book.input';
 import { UpdateBookInput } from '../dto/update-book.input';
-import { JwtGuard } from '../../../domain/auth/guards/jwt.guard';
+import { AuthorizationGuard } from '../../authorization/guard/authorization.guard';
 import { UseGuards } from '@nestjs/common';
 
 @Resolver(() => Book)
 export class BookResolver {
   constructor(private readonly bookService: BookService) {}
-
+  @UseGuards(AuthorizationGuard)
   @Mutation(() => Book)
-  @UseGuards(JwtGuard)
   createBook(@Args('createBookInput') createBookInput: CreateBookInput) {
     return this.bookService.create(createBookInput);
   }
-
+  @UseGuards(AuthorizationGuard)
   @Query(() => [Book], { name: 'books' })
-  @UseGuards(JwtGuard)
   findAll() {
     return this.bookService.findAll();
   }
-
+  @UseGuards(AuthorizationGuard)
   @Query(() => Book, { name: 'book' })
-  @UseGuards(JwtGuard)
   findOne(@Args('id', { type: () => Int }) id: number) {
     return this.bookService.findOne(id);
   }
 
+  @UseGuards(AuthorizationGuard)
   @Mutation(() => Book)
-  @UseGuards(JwtGuard)
   updateBook(@Args('updateBookInput') updateBookInput: UpdateBookInput) {
     return this.bookService.update(updateBookInput.id, updateBookInput);
   }
 
+  @UseGuards(AuthorizationGuard)
   @Mutation(() => Book)
-  @UseGuards(JwtGuard)
   removeBook(@Args('id', { type: () => Int }) id: number) {
     return this.bookService.remove(id);
   }

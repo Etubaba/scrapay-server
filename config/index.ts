@@ -10,6 +10,11 @@ export default () => ({
     name: 'scrapay',
   },
 
+  auth0: {
+    audience: process.env.AUTH0_AUDIENCE,
+    domain: process.env.AUTH0_DOMAIN,
+  },
+
   jwt: {
     access: {
       secret: process.env.JWT_SECRET,
