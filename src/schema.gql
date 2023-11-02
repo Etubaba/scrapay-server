@@ -2,13 +2,6 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type AuthResponse {
-  accessToken: String!
-  full_name: String!
-  id: Float!
-  refreshToken: String!
-}
-
 type Book {
   description: String!
   id: Int!
@@ -20,22 +13,8 @@ input CreateBookInput {
   name: String!
 }
 
-input LoginInput {
-  email: String!
-  password: String!
-}
-
 type Mutation {
   createBook(createBookInput: CreateBookInput!): Book!
-
-  """SignIn a user"""
-  login(loginInput: LoginInput!): AuthResponse!
-
-  """refresh expired access token with refresh token"""
-  refreshtoken(refreshTokenInput: RefreshTokenInput!): AuthResponse!
-
-  """SignUp a user"""
-  register(registerInput: RegisterInput!): AuthResponse!
   removeBook(id: Int!): Book!
   updateBook(updateBookInput: UpdateBookInput!): Book!
 }
@@ -44,16 +23,6 @@ type Query {
   book(id: Int!): Book!
   books: [Book!]!
   sayHello: String!
-}
-
-input RefreshTokenInput {
-  token: String!
-}
-
-input RegisterInput {
-  email: String!
-  full_name: String!
-  password: String!
 }
 
 input UpdateBookInput {

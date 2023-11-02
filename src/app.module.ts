@@ -6,8 +6,6 @@ import { PrismaModule } from './prisma/prisma.module';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
-import { AuthModule } from './domain/auth/auth.module';
-import { JwtService } from '@nestjs/jwt';
 import { BookModule } from './domain/book/book.module';
 import { AuthorizationModule } from './domain/authorization/authorization.module';
 
@@ -19,12 +17,12 @@ import { AuthorizationModule } from './domain/authorization/authorization.module
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       sortSchema: true,
     }),
+
     PrismaModule,
-    AuthModule,
     BookModule,
     AuthorizationModule,
   ],
 
-  providers: [JwtService, AppResolver],
+  providers: [AppResolver],
 })
 export class AppModule {}

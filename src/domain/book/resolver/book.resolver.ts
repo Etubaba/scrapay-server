@@ -5,6 +5,7 @@ import { CreateBookInput } from '../dto/create-book.input';
 import { UpdateBookInput } from '../dto/update-book.input';
 import { AuthorizationGuard } from '../../authorization/guard/authorization.guard';
 import { UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 
 @Resolver(() => Book)
 export class BookResolver {
@@ -14,6 +15,7 @@ export class BookResolver {
   createBook(@Args('createBookInput') createBookInput: CreateBookInput) {
     return this.bookService.create(createBookInput);
   }
+
   @UseGuards(AuthorizationGuard)
   @Query(() => [Book], { name: 'books' })
   findAll() {

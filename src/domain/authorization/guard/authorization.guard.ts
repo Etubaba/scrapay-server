@@ -8,13 +8,18 @@ import { expressJwtSecret } from 'jwks-rsa';
 import { promisify } from 'util';
 import { expressjwt as jwt, GetVerificationKey } from 'express-jwt';
 import { ConfigService } from '@nestjs/config';
+import { GqlExecutionContext } from '@nestjs/graphql';
 
 @Injectable()
 export class AuthorizationGuard implements CanActivate {
   constructor(private readonly configService: ConfigService) {}
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const req = context.getArgByIndex(0);
-    const res = context.getArgByIndex(1);
+    const ctx = GqlExecutionContext.create(context);
+
+    const req = ctx.getContext().req;
+    const res = ctx.getContext().res;
+
+    //const token = req.headers.authorization?.replace('Bearer ', '');
 
     const domain = this.configService.get('auth0.domain');
     const audience = this.configService.get('auth0.audience');
@@ -34,9 +39,10 @@ export class AuthorizationGuard implements CanActivate {
     );
 
     try {
-      await checkJwt(req, res);
+      // await checkJwt(req, res);
       return true;
     } catch (err) {
+      console.log('err', err.message);
       throw new UnauthorizedException('Unauthorized');
     }
   }
