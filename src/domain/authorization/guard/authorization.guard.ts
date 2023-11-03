@@ -14,15 +14,14 @@ import { GqlExecutionContext } from '@nestjs/graphql';
 export class AuthorizationGuard implements CanActivate {
   constructor(private readonly configService: ConfigService) {}
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const ctx = GqlExecutionContext.create(context);
+    const ctx = GqlExecutionContext.create(context); // convert to graphql context
 
     const req = ctx.getContext().req;
     const res = ctx.getContext().res;
 
-    //const token = req.headers.authorization?.replace('Bearer ', '');
-
     const domain = this.configService.get('auth0.domain');
     const audience = this.configService.get('auth0.audience');
+
     // create a promise jwt check
     const checkJwt = promisify(
       jwt({
@@ -30,16 +29,17 @@ export class AuthorizationGuard implements CanActivate {
           cache: true,
           rateLimit: true,
           jwksRequestsPerMinute: 5,
-          jwksUri: `${domain}.well-known/jwks.json`,
+          jwksUri: `https://${domain}/.well-known/jwks.json`,
         }) as GetVerificationKey,
         audience: audience,
-        issuer: domain,
+        issuer: `https://${domain}/`,
+
         algorithms: ['RS256'],
       }),
     );
 
     try {
-      // await checkJwt(req, res);
+      await checkJwt(req, res);
       return true;
     } catch (err) {
       console.log('err', err.message);
