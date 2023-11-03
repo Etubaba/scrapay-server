@@ -20,6 +20,8 @@ This project was deployed on [https://railway.app/](https://railway.app/) and ca
 
 This is a Graphql server built with nestJS, it authenticate users logged in via auth0 client interface. After a successful authentication user can now perform other book management operations using apollo client for client request.
 
+Other tools includes express-jwt for authentication auth0 jwt token, prisma for database query, jwks-rsa to retrive secret for token validation.
+
 Unit testing was implemented to run test for functionalities on this server.
 
 # <span style="color:#297deb"> How to run: </span>
