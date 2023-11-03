@@ -5,7 +5,7 @@ export default () => ({
   app: {
     environment:
       process.env.APP_ENV === 'production' ? 'production' : process.env.APP_ENV,
-    port: parseInt(process.env.APP_PORT, 10) || 3010,
+    port: process.env.PORT,
 
     name: 'scrapay',
   },
